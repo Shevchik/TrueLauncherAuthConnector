@@ -7,7 +7,6 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.injector.GamePhase;
 
-import fr.xephi.authme.AuthMe;
 import fr.xephi.authme.api.API;
 
 public class PacketListener1 {
