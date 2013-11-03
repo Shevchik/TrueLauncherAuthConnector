@@ -1,0 +1,4 @@
+TrueLauncherAuthConnector
+=========================
+
+AuthConnector for TrueLauncher
