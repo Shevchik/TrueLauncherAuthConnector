@@ -47,7 +47,7 @@ public class Main extends JavaPlugin {
 		}
 	}
 
-	private void loadConfig()
+	public void loadConfig()
 	{
 		FileConfiguration config = getConfig();
 		authtype = config.getInt("authtype", authtype);
