@@ -7,6 +7,9 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.injector.GamePhase;
 
+import fr.xephi.authme.AuthMe;
+import fr.xephi.authme.api.API;
+
 public class PacketListener1 {
 
 	private Main main;
@@ -44,13 +47,25 @@ public class PacketListener1 {
 								{
 									if (knowntoken.equals(token))
 									{
-										Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
+										if (API.isRegistered(name))
 										{
-											public void run()
+											Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
 											{
-												Bukkit.getPlayerExact(name).chat("/login "+password);
-											}
-										});
+												public void run()
+												{
+													Bukkit.getPlayerExact(name).chat("/login "+password);
+												}	
+											});
+										} else 
+										{
+											Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
+											{
+												public void run()
+												{
+													Bukkit.getPlayerExact(name).chat("/register "+password+" "+password);
+												}	
+											});
+										}
 									}
 								}
 								e.setCancelled(true);
