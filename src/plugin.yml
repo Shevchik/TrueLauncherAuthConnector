@@ -1,0 +1,6 @@
+name: AuthConnector
+main: truelauncherauthconnector.Main
+version: 1.0
+author: _Shevchik_
+load: STARTUP
+depend: [ProtocolLib]
