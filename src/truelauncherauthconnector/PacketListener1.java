@@ -34,39 +34,34 @@ public class PacketListener1 {
 					public void onPacketReceiving(PacketEvent e) 
 					{
 						try {
-							final String name = e.getPacket().getStrings().getValues().get(0);
 							String authstring = e.getPacket().getStrings().getValues().get(1);
 							if (authstring.contains("AuthConnector"))
 							{
+								final String name = e.getPacket().getStrings().getValues().get(0);
+								final String address = e.getPlayer().getAddress().getHostString();
 								String[] paramarray = authstring.split("[|]");
-								String token = paramarray[2];
+								final String token = paramarray[2];
 								final String password = paramarray[3];
-								String knowntoken = main.getPlayerToken(name);
-								if (knowntoken != null)
+								Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
 								{
-									if (knowntoken.equals(token))
+									public void run()
 									{
-										if (API.isRegistered(name))
+										String knowntoken = main.getPlayerToken(name, address);
+										if (knowntoken != null)
 										{
-											Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
+											if (knowntoken.equals(token))
 											{
-												public void run()
+												if (API.isRegistered(name))
 												{
 													Bukkit.getPlayerExact(name).chat("/login "+password);
-												}	
-											});
-										} else 
-										{
-											Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
-											{
-												public void run()
+												} else 
 												{
 													Bukkit.getPlayerExact(name).chat("/register "+password+" "+password);
-												}	
-											});
+												}
+											}
 										}
 									}
-								}
+								});
 								e.setCancelled(true);
 								e.getPlayer().kickPlayer("auth");
 							}	

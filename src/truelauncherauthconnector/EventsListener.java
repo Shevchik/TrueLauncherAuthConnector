@@ -24,7 +24,7 @@ public class EventsListener implements Listener {
 	{
 		String name = e.getPlayer().getName();
 		String token = UUID.randomUUID().toString();
-		main.registerPlayerToken(name, token);
+		main.registerPlayerToken(name, e.getPlayer().getAddress().getHostString(), token);
 		//loginsystem string format: AuthMeSocketLoginSystem|authtype|host|port|nick|token
 		e.getPlayer().sendMessage(ChatColor.GRAY+"AuthConnector|"+main.authtype+"|"+main.hostname+"|"+main.port+"|"+e.getPlayer().getName()+"|"+token);
 	}
