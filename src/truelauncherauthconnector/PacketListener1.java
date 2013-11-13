@@ -1,8 +1,10 @@
 package truelauncherauthconnector;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import com.comphenix.protocol.Packets;
+import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.injector.GamePhase;
@@ -26,8 +28,8 @@ public class PacketListener1 {
 						PacketAdapter
 						.params(main, Packets.Client.HANDSHAKE)
 						.clientSide()
-						.optionIntercept()
-						.gamePhase(GamePhase.BOTH)
+						.gamePhase(GamePhase.LOGIN)
+						.listenerPriority(ListenerPriority.LOWEST)
 				)
 				{
 					@Override
@@ -37,7 +39,8 @@ public class PacketListener1 {
 							String authstring = e.getPacket().getStrings().getValues().get(1);
 							if (authstring.contains("AuthConnector"))
 							{
-								final String name = e.getPacket().getStrings().getValues().get(0);
+								System.out.println(authstring);
+								final String playername = e.getPacket().getStrings().getValues().get(0);
 								final String address = e.getPlayer().getAddress().getHostString();
 								String[] paramarray = authstring.split("[|]");
 								final String token = paramarray[2];
@@ -46,18 +49,22 @@ public class PacketListener1 {
 								{
 									public void run()
 									{
-										String knowntoken = main.getPlayerToken(name, address);
-										if (knowntoken != null)
+										String knowntoken = main.getPlayerToken(playername, address);
+										if (knowntoken != null && knowntoken.equals(token))
 										{
-											if (knowntoken.equals(token))
+											if (API.isRegistered(playername))
 											{
-												if (API.isRegistered(name))
+												Player player = Bukkit.getPlayerExact(playername);
+												if (API.checkPassword(playername, password))
 												{
-													Bukkit.getPlayerExact(name).chat("/login "+password);
-												} else 
+													API.hookAuthMe().management.performLogin(player, password, false);
+												} else
 												{
-													Bukkit.getPlayerExact(name).chat("/register "+password+" "+password);
+													player.kickPlayer("Неправильный пароль");
 												}
+											} else 
+											{
+												API.registerPlayer(playername, password);
 											}
 										}
 									}

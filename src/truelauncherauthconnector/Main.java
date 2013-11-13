@@ -66,7 +66,7 @@ public class Main extends JavaPlugin {
 	
 	public void onDisable()
 	{
-		protocolManager.removePacketListeners(this);
+		protocolManager.getAsynchronousManager().unregisterAsyncHandlers(this);
 		protocolManager = null;
 	}
 	
