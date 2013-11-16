@@ -41,7 +41,6 @@ public class PacketListener1 {
 							{
 								//authpacket(nick + token + password)
 								String authstring = e.getPacket().getStrings().getValues().get(1);
-								System.out.println(authstring);
 								final String address = e.getPlayer().getAddress().getHostString();
 								String[] paramarray = authstring.split("[|]");
 								final String playername = paramarray[0];
