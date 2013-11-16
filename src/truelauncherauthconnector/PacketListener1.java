@@ -36,15 +36,17 @@ public class PacketListener1 {
 					public void onPacketReceiving(PacketEvent e) 
 					{
 						try {
-							String authstring = e.getPacket().getStrings().getValues().get(1);
-							if (authstring.contains("AuthConnector"))
+							String name = e.getPacket().getStrings().getValues().get(0);
+							if (name.equals("AuthConnector"))
 							{
+								//authpacket(nick + token + password)
+								String authstring = e.getPacket().getStrings().getValues().get(1);
 								System.out.println(authstring);
-								final String playername = e.getPacket().getStrings().getValues().get(0);
 								final String address = e.getPlayer().getAddress().getHostString();
 								String[] paramarray = authstring.split("[|]");
-								final String token = paramarray[2];
-								final String password = paramarray[3];
+								final String playername = paramarray[0];
+								final String token = paramarray[1];
+								final String password = paramarray[2];
 								Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
 								{
 									public void run()

@@ -25,8 +25,8 @@ public class EventsListener implements Listener {
 		String name = e.getPlayer().getName();
 		String token = UUID.randomUUID().toString();
 		main.registerPlayerToken(name, e.getPlayer().getAddress().getHostString(), token);
-		//loginsystem string format: AuthMeSocketLoginSystem|authtype|host|port|nick|token
-		e.getPlayer().sendMessage(ChatColor.GRAY+"AuthConnector|"+main.authtype+"|"+main.hostname+"|"+main.port+"|"+e.getPlayer().getName()+"|"+token);
+		//loginsystem string format: AuthConnector|authtype|protocolversion|host|port|nick|token|
+		e.getPlayer().sendMessage(ChatColor.GRAY+"AuthConnector|"+main.authtype+"|"+main.protocolversion+"|"+main.hostname+"|"+main.port+"|"+e.getPlayer().getName()+"|"+token);
 	}
 	
 	@EventHandler(priority=EventPriority.MONITOR,ignoreCancelled=true)
@@ -42,6 +42,7 @@ public class EventsListener implements Listener {
 		if (e.getCommand().equalsIgnoreCase("authconnector reload"))
 		{
 			main.loadConfig();
+			e.getSender().sendMessage("Config reloaded");
 		}
 	}
 	

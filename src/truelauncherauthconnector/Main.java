@@ -40,8 +40,8 @@ public class Main extends JavaPlugin {
 	}
 	public String hostname = "host";
 	public int port = 25565;
-	
 	public int authtype = 1;
+	public int protocolversion = -1;
 	public void onEnable()
 	{
 		port = getServer().getPort();
@@ -59,14 +59,16 @@ public class Main extends JavaPlugin {
 		FileConfiguration config = getConfig();
 		authtype = config.getInt("authtype", authtype);
 		hostname = config.getString("hostname", hostname);
+		protocolversion = config.getInt("protocolversion",protocolversion);
 		config.set("authtype", authtype);
 		config.set("hostname", hostname);
+		config.set("protocolversion",protocolversion);
 		saveConfig();
 	}
 	
 	public void onDisable()
 	{
-		protocolManager.getAsynchronousManager().unregisterAsyncHandlers(this);
+		protocolManager.removePacketListeners(this);
 		protocolManager = null;
 	}
 	
