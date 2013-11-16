@@ -53,9 +53,9 @@ public class PacketListener1 {
 										String knowntoken = main.getPlayerToken(playername, address);
 										if (knowntoken != null && knowntoken.equals(token))
 										{
+											Player player = Bukkit.getPlayerExact(playername);
 											if (API.isRegistered(playername))
 											{
-												Player player = Bukkit.getPlayerExact(playername);
 												if (API.checkPassword(playername, password))
 												{
 													API.hookAuthMe().management.performLogin(player, password, false);
@@ -65,7 +65,7 @@ public class PacketListener1 {
 												}
 											} else 
 											{
-												API.registerPlayer(playername, password);
+												player.chat("/register "+password+" "+password);
 											}
 										}
 									}
