@@ -40,18 +40,14 @@ public class Main extends JavaPlugin {
 	}
 	public String hostname = "host";
 	public int port = 25565;
-	public int authtype = 1;
+	public int authtype = 2;
 	public int protocolversion = -1;
 	public void onEnable()
 	{
 		port = getServer().getPort();
-		loadConfig();
 		protocolManager = ProtocolLibrary.getProtocolManager();
 		getServer().getPluginManager().registerEvents(new EventsListener(this), this);
-		if (authtype == 1)
-		{
-			new PacketListener1(this);
-		}
+		loadConfig();
 	}
 
 	public void loadConfig()
@@ -63,6 +59,15 @@ public class Main extends JavaPlugin {
 		config.set("authtype", authtype);
 		config.set("hostname", hostname);
 		config.set("protocolversion",protocolversion);
+		protocolManager.removePacketListeners(this);
+		if (authtype == 1)
+		{
+			new PacketListener1(this);
+		} else
+		if (authtype == 2)
+		{
+			new PacketListener2(this);
+		}
 		saveConfig();
 	}
 	
