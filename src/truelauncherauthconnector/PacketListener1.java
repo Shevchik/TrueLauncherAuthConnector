@@ -40,16 +40,19 @@ public class PacketListener1 {
 								String authstring = e.getPacket().getStrings().getValues().get(1);
 								final String address = e.getPlayer().getAddress().getHostString();
 								String[] paramarray = authstring.split("[|]");
-								final String playername = paramarray[0];
-								final String token = paramarray[1];
-								final String password = paramarray[2];
-								Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
+								if (paramarray.length == 3)
 								{
-									public void run()
+									final String playername = paramarray[0];
+									final String token = paramarray[1];
+									final String password = paramarray[2];
+									Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
 									{
-										Auth.doAuth(main, playername, address, token, password);
-									}
-								});
+										public void run()
+										{
+											Auth.doAuth(main, playername, address, token, password);
+										}
+									});
+								}
 								e.setCancelled(true);
 								e.getPlayer().kickPlayer("auth");
 							}	

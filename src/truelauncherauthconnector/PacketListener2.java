@@ -37,16 +37,19 @@ public class PacketListener2 {
 							if (authstring.contains("AuthConnector"))
 							{
 								String[] paramarray = authstring.split("[|]");
-								final String playername = paramarray[1];
-								final String token = paramarray[2];
-								final String password = paramarray[3];
-								Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
+								if (paramarray.length == 4)
 								{
-									public void run()
+									final String playername = paramarray[1];
+									final String token = paramarray[2];
+									final String password = paramarray[3];
+									Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
 									{
-										Auth.doAuth(main, playername, address, token, password);
-									}
-								});
+										public void run()
+										{
+											Auth.doAuth(main, playername, address, token, password);
+										}
+									});
+								}
 								e.setCancelled(true);
 								e.getPlayer().kickPlayer("auth");
 							}
