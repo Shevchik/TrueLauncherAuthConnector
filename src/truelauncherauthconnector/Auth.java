@@ -21,14 +21,14 @@ public class Auth {
 					API.forceLogin(player);
 				} else
 				{
-					player.kickPlayer("Неправильный пароль");
+					player.kickPlayer("РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ РїР°СЂРѕР»СЊ");
 				}
 			} else 
 			{
 				String ip = player.getAddress().getAddress().getHostAddress();
 				if (API.database.getAllAuthsByIp(ip).size() >= Settings.getmaxRegPerIp)
 				{
-					player.kickPlayer("С данного ip адреса уже зарегестрирован аккаунт");
+					player.kickPlayer("РЎ РґР°РЅРЅРѕРіРѕ ip Р°РґСЂРµСЃР° СѓР¶Рµ Р·Р°СЂРµРіРµСЃС‚СЂРёСЂРѕРІР°РЅ Р°РєРєР°СѓРЅС‚");
 				} else
 				{
 					API.registerPlayer(playername, password);
