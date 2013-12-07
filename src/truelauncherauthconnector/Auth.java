@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import fr.xephi.authme.api.API;
+import fr.xephi.authme.settings.Settings;
 
 public class Auth {
 	
@@ -24,8 +25,15 @@ public class Auth {
 				}
 			} else 
 			{
-				API.registerPlayer(playername, password);
-				API.forceLogin(player);
+				String ip = player.getAddress().getAddress().getHostAddress();
+				if (API.database.getAllAuthsByIp(ip).size() >= Settings.getmaxRegPerIp)
+				{
+					player.kickPlayer("С данного ip адреса уже зарегестрирован аккаунт");
+				} else
+				{
+					API.registerPlayer(playername, password);
+					API.forceLogin(player);
+				}
 			}
 		}
 	}
