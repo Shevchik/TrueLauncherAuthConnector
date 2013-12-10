@@ -8,7 +8,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.server.ServerCommandEvent;
 
 public class EventsListener implements Listener {
 
@@ -34,16 +33,5 @@ public class EventsListener implements Listener {
 	{
 		main.unregisterPlayerToken(e.getPlayer().getName());
 	}
-	
-	
-	@EventHandler(priority=EventPriority.MONITOR,ignoreCancelled=true)
-	public void onConsoleCommand(ServerCommandEvent e)
-	{
-		if (e.getCommand().equalsIgnoreCase("authconnector reload"))
-		{
-			main.loadConfig();
-			e.getSender().sendMessage("Config reloaded");
-		}
-	}
-	
+
 }

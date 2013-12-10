@@ -8,6 +8,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.injector.GamePhase;
 
+@SuppressWarnings("deprecation")
 public class PacketListener1 {
 
 	private Main main;
@@ -16,8 +17,7 @@ public class PacketListener1 {
 		this.main = main;
 		startPacketJoinListener();
 	}
-	
-	
+
 	private void startPacketJoinListener()
 	{
 		main.getProtocolManager().addPacketListener(

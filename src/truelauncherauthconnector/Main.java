@@ -15,6 +15,23 @@ public class Main extends JavaPlugin {
 	{
 		return protocolManager;
 	}	
+
+	@Override
+	public void onEnable()
+	{
+		port = getServer().getPort();
+		protocolManager = ProtocolLibrary.getProtocolManager();
+		getServer().getPluginManager().registerEvents(new EventsListener(this), this);
+		getCommand("authconnector").setExecutor(new Commands(this));
+		loadConfig();
+	}
+	
+	@Override
+	public void onDisable()
+	{
+		protocolManager.removePacketListeners(this);
+		protocolManager = null;
+	}
 	
 	private HashMap<String, String> playertokens = new HashMap<String, String>();
 	private HashMap<String, String> palyersaddress = new HashMap<String, String>();
@@ -38,18 +55,11 @@ public class Main extends JavaPlugin {
 		unregisterPlayerToken(player);
 		return token;
 	}
+
 	public String hostname = "host";
 	public int port = 25565;
 	public int authtype = 2;
 	public int protocolversion = -1;
-	public void onEnable()
-	{
-		port = getServer().getPort();
-		protocolManager = ProtocolLibrary.getProtocolManager();
-		getServer().getPluginManager().registerEvents(new EventsListener(this), this);
-		loadConfig();
-	}
-
 	public void loadConfig()
 	{
 		FileConfiguration config = getConfig();
@@ -69,12 +79,6 @@ public class Main extends JavaPlugin {
 			new PacketListener2(this);
 		}
 		saveConfig();
-	}
-	
-	public void onDisable()
-	{
-		protocolManager.removePacketListeners(this);
-		protocolManager = null;
 	}
 	
 }
