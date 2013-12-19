@@ -34,24 +34,17 @@ public class Main extends JavaPlugin {
 	}
 	
 	private HashMap<String, String> playertokens = new HashMap<String, String>();
-	private HashMap<String, String> palyersaddress = new HashMap<String, String>();
-	public void registerPlayerToken(String player, String address, String token)
+	public void registerPlayerToken(String player, String token)
 	{
 		playertokens.put(player, token);
-		palyersaddress.put(player, address);
 	}
 	public void unregisterPlayerToken(String player)
 	{
 		playertokens.remove(player);
-		palyersaddress.remove(player);
 	}
-	public String getPlayerToken(String player, String address)
+	public String getPlayerToken(String player)
 	{
-		String token = null;
-		if (palyersaddress.get(player).equals(address))
-		{
-			token = playertokens.get(player);
-		}
+		String token = playertokens.get(player);
 		unregisterPlayerToken(player);
 		return token;
 	}

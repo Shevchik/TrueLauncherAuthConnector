@@ -24,6 +24,9 @@ public class PacketListener2 {
 						.params(main, PacketType.Handshake.Client.SET_PROTOCOL)
 						.clientSide()
 						.listenerPriority(ListenerPriority.LOWEST)
+						.optionManualGamePhase()
+						.loginPhase()
+						.optionIntercept()
 				)
 				{
 					@Override
@@ -32,7 +35,6 @@ public class PacketListener2 {
 						try {
 							//authpacket(AuthConnector + nick + token + password)
 							String authstring = e.getPacket().getStrings().getValues().get(0);
-							final String address = e.getPlayer().getAddress().getHostString();
 							if (authstring.contains("AuthConnector"))
 							{
 								String[] paramarray = authstring.split("[|]");
@@ -45,7 +47,7 @@ public class PacketListener2 {
 									{
 										public void run()
 										{
-											Auth.doAuth(main, playername, address, token, password);
+											Auth.doAuth(main, playername, token, password);
 										}
 									});
 								}

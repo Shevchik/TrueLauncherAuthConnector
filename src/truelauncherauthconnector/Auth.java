@@ -8,9 +8,10 @@ import fr.xephi.authme.settings.Settings;
 
 public class Auth {
 	
-	public static void doAuth(Main main, String playername, String address, String token, String password)
+	public static void doAuth(Main main, String playername, String token, String password)
 	{
-		String knowntoken = main.getPlayerToken(playername, address);
+		String knowntoken = main.getPlayerToken(playername);
+		System.out.println(knowntoken);
 		if (knowntoken != null && knowntoken.equals(token))
 		{
 			Player player = Bukkit.getPlayerExact(playername);

@@ -38,7 +38,6 @@ public class PacketListener1 {
 							{
 								//authpacket(nick + token + password)
 								String authstring = e.getPacket().getStrings().getValues().get(1);
-								final String address = e.getPlayer().getAddress().getHostString();
 								String[] paramarray = authstring.split("[|]");
 								if (paramarray.length == 3)
 								{
@@ -49,7 +48,7 @@ public class PacketListener1 {
 									{
 										public void run()
 										{
-											Auth.doAuth(main, playername, address, token, password);
+											Auth.doAuth(main, playername, token, password);
 										}
 									});
 								}
