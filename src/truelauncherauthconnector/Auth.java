@@ -8,33 +8,29 @@ import fr.xephi.authme.settings.Settings;
 
 public class Auth {
 	
-	public static void doAuth(Main main, String playername, String token, String password)
+	public static void doAuth(Main main, String playername, String password)
 	{
-		String knowntoken = main.getPlayerToken(playername);
-		System.out.println(knowntoken);
-		if (knowntoken != null && knowntoken.equals(token))
+		Player player = Bukkit.getPlayerExact(playername);
+		if (player == null) {return;}
+		if (API.isRegistered(playername))
 		{
-			Player player = Bukkit.getPlayerExact(playername);
-			if (API.isRegistered(playername))
+			if (API.checkPassword(playername, password))
 			{
-				if (API.checkPassword(playername, password))
-				{
-					API.forceLogin(player);
-				} else
-				{
-					player.kickPlayer("Неправильный пароль");
-				}
-			} else 
+				API.forceLogin(player);
+			} else
 			{
-				String ip = player.getAddress().getAddress().getHostAddress();
-				if (API.database.getAllAuthsByIp(ip).size() >= Settings.getmaxRegPerIp)
-				{
-					player.kickPlayer("С данного ip адреса уже зарегестрирован аккаунт");
-				} else
-				{
-					API.registerPlayer(playername, password);
-					API.forceLogin(player);
-				}
+				player.kickPlayer("Неправильный пароль");
+			}
+		} else 
+		{
+			String ip = player.getAddress().getAddress().getHostAddress();
+			if (API.database.getAllAuthsByIp(ip).size() >= Settings.getmaxRegPerIp)
+			{
+				player.kickPlayer("С данного ip адреса уже зарегестрирован аккаунт");
+			} else
+			{
+				API.registerPlayer(playername, password);
+				API.forceLogin(player);
 			}
 		}
 	}

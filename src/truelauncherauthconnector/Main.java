@@ -34,15 +34,15 @@ public class Main extends JavaPlugin {
 	}
 	
 	private HashMap<String, String> playertokens = new HashMap<String, String>();
-	public void registerPlayerToken(String player, String token)
+	public synchronized void registerPlayerToken(String player, String token)
 	{
 		playertokens.put(player, token);
 	}
-	public void unregisterPlayerToken(String player)
+	public synchronized void unregisterPlayerToken(String player)
 	{
 		playertokens.remove(player);
 	}
-	public String getPlayerToken(String player)
+	public synchronized String getPlayerToken(String player)
 	{
 		String token = playertokens.get(player);
 		unregisterPlayerToken(player);
