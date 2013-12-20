@@ -38,7 +38,7 @@ public class Main extends JavaPlugin {
 	{
 		playertokens.put(player, token);
 	}
-	public String getPlayerToken(String player)
+	public synchronized String getPlayerToken(String player)
 	{
 		String token = playertokens.get(player);
 		playertokens.remove(player);
