@@ -31,7 +31,7 @@ public class EventsListener implements Listener {
 	@EventHandler(priority=EventPriority.MONITOR,ignoreCancelled=true)
 	public void onQuit(PlayerQuitEvent e)
 	{
-		main.unregisterPlayerToken(e.getPlayer().getName());
+		main.getPlayerToken(e.getPlayer().getName());
 	}
 
 }

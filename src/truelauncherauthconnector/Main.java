@@ -1,6 +1,6 @@
 package truelauncherauthconnector;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,19 +33,15 @@ public class Main extends JavaPlugin {
 		protocolManager = null;
 	}
 	
-	private HashMap<String, String> playertokens = new HashMap<String, String>();
-	public synchronized void registerPlayerToken(String player, String token)
+	private ConcurrentHashMap<String, String> playertokens = new ConcurrentHashMap<String, String>();
+	public void registerPlayerToken(String player, String token)
 	{
 		playertokens.put(player, token);
 	}
-	public synchronized void unregisterPlayerToken(String player)
-	{
-		playertokens.remove(player);
-	}
-	public synchronized String getPlayerToken(String player)
+	public String getPlayerToken(String player)
 	{
 		String token = playertokens.get(player);
-		unregisterPlayerToken(player);
+		playertokens.remove(player);
 		return token;
 	}
 
