@@ -2,13 +2,12 @@ package truelauncherauthconnector;
 
 import org.bukkit.Bukkit;
 
-import com.comphenix.protocol.Packets;
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.injector.GamePhase;
 
-@SuppressWarnings("deprecation")
 public class PacketListener1 {
 
 	private Main main;
@@ -23,7 +22,7 @@ public class PacketListener1 {
 		main.getProtocolManager().addPacketListener(
 				new PacketAdapter(
 						PacketAdapter
-						.params(main, Packets.Client.HANDSHAKE)
+						.params(main, PacketType.Handshake.Client.SET_PROTOCOL)
 						.clientSide()
 						.gamePhase(GamePhase.LOGIN)
 						.listenerPriority(ListenerPriority.LOWEST)
