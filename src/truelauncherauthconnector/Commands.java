@@ -15,7 +15,6 @@ public class Commands implements CommandExecutor {
 		this.main = main;
 	}
 	
-	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) 
 	{
 		if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender)
