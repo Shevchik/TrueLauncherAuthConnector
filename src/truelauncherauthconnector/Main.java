@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import truelauncherauthconnector.authplugins.AuthMeRecoded;
 import truelauncherauthconnector.authplugins.AuthMeReloaded;
 
 import com.comphenix.protocol.ProtocolLibrary;
@@ -74,6 +75,11 @@ public class Main extends JavaPlugin {
 		switch (plugin) {
 			case "AuthMeReloaded": {
 				auth = new AuthMeReloaded();
+				break;
+			}
+			case "AuthMeRecoded": {
+				auth = new AuthMeRecoded();
+				break;
 			}
 		}
 		saveConfig();
