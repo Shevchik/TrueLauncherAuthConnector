@@ -3,7 +3,6 @@ package truelauncherauthconnector.authplugins;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import truelauncherauthconnector.Auth;
 import truelauncherauthconnector.Main;
 import fr.xephi.authme.api.API;
 import fr.xephi.authme.settings.Settings;

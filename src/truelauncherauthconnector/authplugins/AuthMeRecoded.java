@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import fr.xephi.authme.api.RecodedAPI;
-import truelauncherauthconnector.Auth;
 import truelauncherauthconnector.Main;
 
 public class AuthMeRecoded implements Auth {

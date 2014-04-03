@@ -1,4 +1,6 @@
-package truelauncherauthconnector;
+package truelauncherauthconnector.authplugins;
+
+import truelauncherauthconnector.Main;
 
 public interface Auth {
 

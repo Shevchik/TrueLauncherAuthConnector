@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import truelauncherauthconnector.authplugins.Auth;
 import truelauncherauthconnector.authplugins.AuthMeRecoded;
 import truelauncherauthconnector.authplugins.AuthMeReloaded;
 
@@ -61,28 +62,31 @@ public class Main extends JavaPlugin {
 		authtype = config.getInt("authtype", authtype);
 		hostname = config.getString("hostname", hostname);
 		protocolversion = config.getInt("protocolversion", protocolversion);
-		String plugin = config.getString("authplugin", "AuthMeReloaded");
 		config.set("authtype", authtype);
 		config.set("hostname", hostname);
 		config.set("protocolversion", protocolversion);
-		config.set("authplugin", plugin);
 		protocolManager.removePacketListeners(this);
 		if (authtype == 1) {
 			new PacketListener1(this);
 		} else if (authtype == 2) {
 			new PacketListener2(this);
 		}
-		switch (plugin) {
-			case "AuthMeReloaded": {
-				auth = new AuthMeReloaded();
-				break;
-			}
-			case "AuthMeRecoded": {
-				auth = new AuthMeRecoded();
-				break;
-			}
-		}
+		auth = detectAndHookInstalledAuthPlugin();
 		saveConfig();
+	}
+
+	private Auth detectAndHookInstalledAuthPlugin() {
+		try {
+			Class.forName("fr.xephi.authme.api.RecodedAPI", false, getClassLoader());
+			return new AuthMeRecoded();
+		} catch (ClassNotFoundException e) {
+		}
+		try {
+			Class.forName("fr.xephi.authme.api.API", false, getClassLoader());
+			return new AuthMeReloaded();
+		} catch (ClassNotFoundException e) {
+		}
+		return null;
 	}
 
 }
