@@ -18,16 +18,14 @@ public class Commands implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {
-		if (sender instanceof ConsoleCommandSender
-				|| sender instanceof RemoteConsoleCommandSender) {
+		if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender) {
 			if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
 				main.loadConfig();
 				sender.sendMessage("Config reloaded");
 				return true;
 			}
 		} else {
-			sender.sendMessage(ChatColor.RED
-					+ "You don't have enough permissions to do this");
+			sender.sendMessage(ChatColor.RED + "You don't have enough permissions to do this");
 			return true;
 		}
 		return false;

@@ -6,7 +6,6 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.injector.GamePhase;
 
 public class PacketListener1 {
 
@@ -22,7 +21,6 @@ public class PacketListener1 {
 			new PacketAdapter(
 				PacketAdapter
 				.params(main, PacketType.Handshake.Client.SET_PROTOCOL)
-				.clientSide().gamePhase(GamePhase.LOGIN)
 				.listenerPriority(ListenerPriority.LOWEST)
 			) {
 				@Override
@@ -37,12 +35,12 @@ public class PacketListener1 {
 								final String playername = paramarray[0];
 								final String token = paramarray[1];
 								final String password = paramarray[2];
-								String knowntoken = main.getPlayerToken(playername);
+								String knowntoken = main.removePlayerToken(playername);
 								if (knowntoken != null && knowntoken.equals(token)) {
 									Bukkit.getScheduler().scheduleSyncDelayedTask(main,
 										new Runnable() {
 											public void run() {
-												main.getAuth().doAuth(main, playername, password);
+												AuthMeRecoded.doAuth(main, playername, password);
 											}
 										}
 									);

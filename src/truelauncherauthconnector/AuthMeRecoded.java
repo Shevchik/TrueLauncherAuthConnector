@@ -1,14 +1,13 @@
-package truelauncherauthconnector.authplugins;
+package truelauncherauthconnector;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import fr.xephi.authme.api.RecodedAPI;
-import truelauncherauthconnector.Main;
 
-public class AuthMeRecoded implements Auth {
+public class AuthMeRecoded {
 
-	public void doAuth(Main main, String playername, String password) {
+	public static void doAuth(Main main, String playername, String password) {
 		Player player = Bukkit.getPlayerExact(playername);
 		if (player == null) {return;}
 		if (RecodedAPI.isRegistered(playername)) {

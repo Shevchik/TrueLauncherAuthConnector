@@ -21,10 +21,7 @@ public class PacketListener2 {
 			new PacketAdapter(
 				PacketAdapter
 				.params(main, PacketType.Handshake.Client.SET_PROTOCOL)
-				.clientSide()
 				.listenerPriority(ListenerPriority.LOWEST)
-				.optionManualGamePhase().loginPhase()
-				.optionIntercept()
 			) {
 				@Override
 				public void onPacketReceiving(PacketEvent e) {
@@ -38,13 +35,13 @@ public class PacketListener2 {
 								final String playername = paramarray[1];
 								final String token = paramarray[2];
 								final String password = paramarray[3];
-								String knowntoken = main.getPlayerToken(playername);
+								String knowntoken = main.removePlayerToken(playername);
 								if (knowntoken != null && knowntoken.equals(token)) {
 									Bukkit.getScheduler().scheduleSyncDelayedTask(
 										main,
 										new Runnable() {
 											public void run() {
-												main.getAuth().doAuth(main, playername, password);
+												AuthMeRecoded.doAuth(main, playername, password);
 											}
 										}
 									);

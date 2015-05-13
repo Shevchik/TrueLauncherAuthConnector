@@ -5,10 +5,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import truelauncherauthconnector.authplugins.Auth;
-import truelauncherauthconnector.authplugins.AuthMeRecoded;
-import truelauncherauthconnector.authplugins.AuthMeReloaded;
-
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 
@@ -18,11 +14,6 @@ public class Main extends JavaPlugin {
 
 	protected ProtocolManager getProtocolManager() {
 		return protocolManager;
-	}
-
-	private Auth auth;
-	protected Auth getAuth() {
-		return auth;
 	}
 
 	@Override
@@ -46,10 +37,8 @@ public class Main extends JavaPlugin {
 		playertokens.put(player, token);
 	}
 
-	public synchronized String getPlayerToken(String player) {
-		String token = playertokens.get(player);
-		playertokens.remove(player);
-		return token;
+	public String removePlayerToken(String player) {
+		return playertokens.remove(player);
 	}
 
 	public String hostname = "host";
@@ -71,22 +60,7 @@ public class Main extends JavaPlugin {
 		} else if (authtype == 2) {
 			new PacketListener2(this);
 		}
-		auth = detectAndHookInstalledAuthPlugin();
 		saveConfig();
-	}
-
-	private Auth detectAndHookInstalledAuthPlugin() {
-		try {
-			Class.forName("fr.xephi.authme.api.RecodedAPI", false, getClassLoader());
-			return new AuthMeRecoded();
-		} catch (ClassNotFoundException e) {
-		}
-		try {
-			Class.forName("fr.xephi.authme.api.API", false, getClassLoader());
-			return new AuthMeReloaded();
-		} catch (ClassNotFoundException e) {
-		}
-		return null;
 	}
 
 }

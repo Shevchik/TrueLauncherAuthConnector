@@ -29,7 +29,7 @@ public class EventsListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onQuit(PlayerQuitEvent e) {
-		main.getPlayerToken(e.getPlayer().getName());
+		main.removePlayerToken(e.getPlayer().getName());
 	}
 
 }
